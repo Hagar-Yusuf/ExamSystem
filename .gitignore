@@ -1,0 +1,12 @@
+# Ignore .NET junk
+**/bin/
+**/obj/
+**/.vs/
+
+# Ignore Angular junk
+**/dist/
+**/node_modules/
+
+# Others
+*.user
+*.suo
