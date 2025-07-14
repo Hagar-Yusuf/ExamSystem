@@ -1,5 +1,7 @@
 
 using ExamSystem.Models;
+using ExamSystem.Repositories.Implementations;
+using ExamSystem.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamSystem
@@ -17,6 +19,14 @@ namespace ExamSystem
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<ExamDBContext>(
     options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            builder.Services.AddScoped<IStudentService, StudentService>();
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddControllers()
+    .AddJsonOptions(x =>
+        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
+    );
+
 
 
             var app = builder.Build();
