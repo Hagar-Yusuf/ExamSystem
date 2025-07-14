@@ -1,5 +1,7 @@
 
 using ExamSystem.Models;
+using ExamSystem.Repositories.Implementations;
+using ExamSystem.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExamSystem
@@ -16,7 +18,13 @@ namespace ExamSystem
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<ExamDBContext>(
-    options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+                options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+            //Register
+            builder.Services.AddScoped<IExamRepository, ExamRepository>();
+            builder.Services.AddScoped<ITrueFalseRepository, TrueFalseRepository>();
+            builder.Services.AddScoped<IMcqRepository, McqRepository>();
 
 
             var app = builder.Build();

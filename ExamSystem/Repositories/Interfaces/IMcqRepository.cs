@@ -2,8 +2,7 @@
 
 namespace ExamSystem.Repositories.Interfaces
 {
-    public interface IExamRepository : IRepository<Exam>
+    public interface IMcqRepository : IRepository<MCQQuestion>
     {
-         
     }
 }
