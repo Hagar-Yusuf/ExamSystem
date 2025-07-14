@@ -42,7 +42,7 @@ namespace ExamSystem.Repositories.Implementations
         //Update Exam
         public void Update(Exam entity)
         {
-            Db.Remove(entity).State= Microsoft.EntityFrameworkCore.EntityState.Modified;
+            Db.Entry(entity).State= Microsoft.EntityFrameworkCore.EntityState.Modified;
         }
 
         //Save changes to the database
