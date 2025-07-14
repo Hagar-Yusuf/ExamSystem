@@ -1,0 +1,27 @@
+<div class="exams-container mx-auto my-4 p-4 shadow rounded">
+  <h2 class="section-title mb-4">All Exams</h2>
+
+  <table class="exams-table table table-striped table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Exam ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Duration (mins)</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let exam of exams()">
+        <td>{{ exam.id }}</td>
+        <td>{{ exam.title }}</td>
+        <td>{{ exam.description }}</td>
+        <td>{{ exam.Duration }}</td>
+        <td>
+          <button class="btn btn-sm btn-info me-2" (click)="viewDetails(exam.id)">View</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteExam(exam.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
