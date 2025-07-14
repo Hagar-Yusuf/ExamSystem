@@ -18,6 +18,7 @@ namespace ExamSystem
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
             builder.Services.AddDbContext<ExamDBContext>(
+
     options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddEndpointsApiExplorer();
@@ -28,6 +29,16 @@ namespace ExamSystem
     );
 
 
+                options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+
+            //Register
+            builder.Services.AddScoped<IExamRepository, ExamRepository>();
+            builder.Services.AddScoped<ITrueFalseRepository, TrueFalseRepository>();
+            builder.Services.AddScoped<IMcqRepository, McqRepository>();
+
+            
 
             var app = builder.Build();
 
