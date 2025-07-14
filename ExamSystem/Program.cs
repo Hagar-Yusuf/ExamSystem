@@ -13,26 +13,28 @@ namespace ExamSystem
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+            //  configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
+
+            //Database context configuration
             builder.Services.AddDbContext<ExamDBContext>(
-
     options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            builder.Services.AddScoped<IStudentService, StudentService>();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddControllers()
-    .AddJsonOptions(x =>
-        x.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve
-    );
 
 
-
+            // CORS configuration 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAngularApp",
+                    policy => policy.WithOrigins("http://localhost:4200") // Angular app URL
+                                    .AllowAnyHeader()
+                                    .AllowAnyMethod());
+            });
 
 
             //Register
+            builder.Services.AddScoped<IStudentService, StudentService>();
             builder.Services.AddScoped<IExamRepository, ExamRepository>();
             builder.Services.AddScoped<ITrueFalseRepository, TrueFalseRepository>();
             builder.Services.AddScoped<IMcqRepository, McqRepository>();
@@ -50,6 +52,8 @@ namespace ExamSystem
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAngularApp");
 
             app.UseAuthorization();
 
