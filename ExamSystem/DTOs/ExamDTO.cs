@@ -5,11 +5,6 @@ namespace ExamSystem.DTOs
     public class ExamDto
     {
 
-        public int Exam_ID { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int? Duration { get; set; }
-        public List<QuestionDto> Questions { get; set; }
 
 
         public int Exam_ID { get; set; }
@@ -24,6 +19,9 @@ namespace ExamSystem.DTOs
         [Required(ErrorMessage = "Duration is required.")]
         [Range(1, 6, ErrorMessage = "Duration must be between 1 and 6 hours.")]
         public int? Duration { get; set; }
+
+        public List<QuestionDto> Questions { get; set; }
+
 
 
     }

@@ -24,7 +24,7 @@ namespace ExamSystem.Controllers
             if (exam == null)
                 return NotFound();
 
-            var examDTO = new ExamDTO
+            var examDTO = new ExamDto
             {
                 Exam_ID = exam.Exam_ID,
                 Title = exam.Title,
@@ -40,10 +40,10 @@ namespace ExamSystem.Controllers
         public IActionResult GetAll()
         {
             var exams = examRepository.GetAll().ToList();
-            List<ExamDTO> examDTOs = new List<ExamDTO>();
+            List<ExamDto> examDTOs = new List<ExamDto>();
             foreach(Exam ex in exams)
             {
-                ExamDTO exDto = new ExamDTO()
+                ExamDto exDto = new ExamDto()
                 {
                     Exam_ID = ex.Exam_ID,
                     Title = ex.Title,
@@ -59,7 +59,7 @@ namespace ExamSystem.Controllers
 
         ///////////////////Add Exam//////////////////////
         [HttpPost("AddExam")]
-        public IActionResult AddExam(ExamDTO examDTO)
+        public IActionResult AddExam(ExamDto examDTO)
         {
             if (examDTO == null) return BadRequest();
 
@@ -83,7 +83,7 @@ namespace ExamSystem.Controllers
         }
         ///////////////////Edit Exam//////////////////////
         [HttpPut("EditExam/{id}")]
-        public IActionResult EditExam(ExamDTO examDTO,int id)
+        public IActionResult EditExam(ExamDto examDTO,int id)
         {
            if(examDTO == null) return BadRequest();
            if(examDTO.Exam_ID != id) return BadRequest("Mismatched question ID.");
@@ -115,7 +115,7 @@ namespace ExamSystem.Controllers
             if (exam == null) return NotFound();
             else
             {
-                ExamDTO examDTO = new ExamDTO()
+                ExamDto examDTO = new ExamDto()
                 {
                     Exam_ID = exam.Exam_ID,
                     Title = exam.Title,

@@ -29,7 +29,6 @@ namespace ExamSystem
     );
 
 
-                options => options.UseLazyLoadingProxies().UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
 
