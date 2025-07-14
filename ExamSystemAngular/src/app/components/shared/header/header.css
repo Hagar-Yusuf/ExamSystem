@@ -1,0 +1,4 @@
+/* Optional minimal tweaks (totally optional) */
+.navbar-nav .nav-link.active {
+  font-weight: bold;
+}

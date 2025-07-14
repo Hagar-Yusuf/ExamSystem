@@ -1,0 +1,21 @@
+.exams-container {
+  width: 90%;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #343a40;
+}
+
+.exams-table th,
+.exams-table td {
+  vertical-align: middle;
+  text-align: center;
+}
+
+.exams-table .btn {
+  font-size: 0.875rem;
+}
