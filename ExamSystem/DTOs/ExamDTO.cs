@@ -4,9 +4,6 @@ namespace ExamSystem.DTOs
 {
     public class ExamDto
     {
-
-
-
         public int Exam_ID { get; set; }
         [Required(ErrorMessage = "Title is required.")]
         [StringLength(30,ErrorMessage = "Title must be 30 characters or less.")]

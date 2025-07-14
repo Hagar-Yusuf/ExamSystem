@@ -185,7 +185,7 @@ namespace ExamSystem.Repositories.Implementations
                 .FirstOrDefault(se => se.Student_ID == dto.StudentId && se.Exam_ID == dto.ExamId);
 
             if (studentExam != null)
-                studentExam.isSubmitted = "yes";
+                studentExam.isSubmitted = "Yes";
 
             _context.Results.Add(new Result
             {
