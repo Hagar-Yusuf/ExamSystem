@@ -13,13 +13,13 @@
     </thead>
     <tbody>
       <tr *ngFor="let exam of exams()">
-        <td>{{ exam.id }}</td>
+        <td>{{ exam.exam_ID }}</td>
         <td>{{ exam.title }}</td>
         <td>{{ exam.description }}</td>
-        <td>{{ exam.Duration }}</td>
+        <td>{{ exam.duration }}</td>
         <td>
-          <button class="btn btn-sm btn-info me-2" (click)="viewDetails(exam.id)">View</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteExam(exam.id)">Delete</button>
+          <button class="btn btn-sm btn-info me-2" (click)="viewDetails(exam.exam_ID)">View</button>
+          <button class="btn btn-sm btn-danger" (click)="deleteExam(exam.exam_ID)">Delete</button>
         </td>
       </tr>
     </tbody>

@@ -41,7 +41,7 @@ export class AllExamsComponent implements OnInit {
   }
 
   deleteExam(id: number) {
-    const exam = this.exams().find(e => e.id === id);
+    const exam = this.exams().find(e => e.exam_ID === id);
     if (exam) {
       this.examToDelete.set(exam);
       this.showDeleteModal.set(true);
@@ -51,9 +51,9 @@ export class AllExamsComponent implements OnInit {
   confirmDelete() {
     const exam = this.examToDelete();
     if (exam) {
-      this.examService.deleteExam(exam.id).subscribe({
+      this.examService.deleteExam(exam.exam_ID).subscribe({
         next: () => {
-          this.exams.update(exams => exams.filter(e => e.id !== exam.id));
+          this.exams.update(exams => exams.filter(e => e.exam_ID !== exam.exam_ID));
           this.showDeleteModal.set(false);
         },
         error: (err) => {

@@ -3,10 +3,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 
 export interface Exam {
-  id: number;
+  exam_ID: number;
   title: string;
   description: string;
-  Duration: number;
+  duration: number;
 }
 
 @Injectable({
@@ -17,17 +17,13 @@ export class ExamService {
   private apiUrl = 'https://localhost:7003/api/Exam/ViewAllExams';
 
   getAllExams(): Observable<Exam[]> {
-    return this.http.get<Exam[]>(this.apiUrl, {
-      withCredentials: true // ✅ now this works with Fetch API
-    }).pipe(
+    return this.http.get<Exam[]>(this.apiUrl).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteExam(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`, {
-      withCredentials: true
-    }).pipe(
+    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -35,7 +31,9 @@ export class ExamService {
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
     return throwError(() => new Error(
-      error.error?.message || error.message || 'An unknown error occurred'
+      error.error?.message || 
+      error.message || 
+      'An unknown error occurred'
     ));
   }
 }
