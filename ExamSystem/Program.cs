@@ -26,6 +26,7 @@ namespace ExamSystem
             builder.Services.AddScoped<ITrueFalseRepository, TrueFalseRepository>();
             builder.Services.AddScoped<IMcqRepository, McqRepository>();
 
+            
 
             var app = builder.Build();
 

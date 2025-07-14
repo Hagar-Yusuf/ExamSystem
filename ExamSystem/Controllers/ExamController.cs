@@ -17,7 +17,7 @@ namespace ExamSystem.Controllers
         }
 
                           ///////////////////GetByID//////////////////////
-        [HttpGet("/api/ViewExamByID/{id}")]
+        [HttpGet("ViewExam/{id}")]
         public IActionResult GetByID(int id)
         {
             var exam = examRepository.GetByID(id);
@@ -108,7 +108,7 @@ namespace ExamSystem.Controllers
 
         }
         ///////////////////Delete Exam//////////////////////
-        [HttpDelete("/api/DeleteExam/{id}")]
+        [HttpDelete("DeleteExam/{id}")]
         public IActionResult DeleteExam(int id)
         {
             var exam = examRepository.GetByID(id);

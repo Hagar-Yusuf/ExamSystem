@@ -21,7 +21,7 @@ namespace ExamSystem.Controllers
 
 
         ///////////////////GetByID//////////////////////
-        [HttpGet("/api/ViewTrueFalseQuestionByID/{id}")]
+        [HttpGet("api/View-TrueFalse-Questions/{id}")]
         public IActionResult GetByID(int id)
         {
             var TrueFalseQ = TrueFalseRepository.GetByID(id);
@@ -44,7 +44,7 @@ namespace ExamSystem.Controllers
 
         }
         ///////////////////Get ALL Exams//////////////////////
-        [HttpGet("ViewAllTrueFalseQuestions")]
+        [HttpGet("ViewAll-TrueFalse-Questions")]
         public IActionResult GetAll()
         {
             var TrueFalseQs = TrueFalseRepository.GetAll().ToList();
@@ -68,7 +68,7 @@ namespace ExamSystem.Controllers
 
         }
         ///////////////////Add TrueFalseQuestion//////////////////////
-        [HttpPost("AddTrueFalseQuestion")]
+        [HttpPost("Add-TrueFalse-Question")]
         public IActionResult AddTrueFalseQuestion(TrueFalseDTO trueFalseDTO)
         {
             if (trueFalseDTO == null) return BadRequest();
@@ -98,7 +98,7 @@ namespace ExamSystem.Controllers
             }
         }
         ///////////////////Edit TrueFalseQuestion//////////////////////
-        [HttpPut("EditTrueFalseQuestion/{id}")]
+        [HttpPut("Edit-TrueFalse-Question/{id}")]
         public IActionResult EditTrueFalseQuestion(TrueFalseDTO trueFalseDTO, int id)
         {
             if (trueFalseDTO == null) return BadRequest();
@@ -132,7 +132,7 @@ namespace ExamSystem.Controllers
         }
 
         ///////////////////Delete TFQuestion//////////////////////
-        [HttpDelete("/api/DeleteTFQuestion/{id}")]
+        [HttpDelete("api/Delete-TrueFalse-Question/{id}")]
         public IActionResult DeleteTFQuestion(int id)
         {
             var TrueFalseQ = TrueFalseRepository.GetByID(id);
