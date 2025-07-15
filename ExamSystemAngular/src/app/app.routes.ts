@@ -27,5 +27,5 @@ export const routes: Routes = [
   { path: 'mcq/edit/:id', component: McqEdit },
 
   // Optional wildcard route
-  // { path: '**', component: NotFoundComponent } // if you have a 404 page
+  // { path: '', component: NotFoundComponent } // if you have a 404 page
 ];

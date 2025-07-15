@@ -1,11 +1,13 @@
 ﻿using ExamSystem.DTOs;
 using ExamSystem.Models;
 using ExamSystem.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class McqQuestionsController : ControllerBase
@@ -21,7 +23,7 @@ namespace ExamSystem.Controllers
 
 
         ///////////////////GetByID//////////////////////
-        [HttpGet("/api/ViewMcqQuestionByID/{id}")]
+        [HttpGet("View-Mcq-Question/{id}")]
         public IActionResult GetByID(int id)
         {
             var Mcq = McqRepository.GetByID(id);
@@ -45,7 +47,7 @@ namespace ExamSystem.Controllers
 
         }
         ///////////////////Get ALL Exams//////////////////////
-        [HttpGet("ViewAllMcqQuestions")]
+        [HttpGet("ViewAll-Mcq-Questions")]
         public IActionResult GetAll()
         {
             var Mcqs = McqRepository.GetAll().ToList();
@@ -70,7 +72,7 @@ namespace ExamSystem.Controllers
 
         }
         ///////////////////Add TrueFalseQuestion//////////////////////
-        [HttpPost("AddMcqQuestion")]
+        [HttpPost("Add-Mcq-Question")]
         public IActionResult AddMcqQuestion(McqDTO mcqDTO)
         {
             if (mcqDTO == null) return BadRequest();
@@ -101,7 +103,7 @@ namespace ExamSystem.Controllers
             }
         }
         ///////////////////Edit McqQuestion//////////////////////
-        [HttpPut("EditMcqQuestion/{id}")]
+        [HttpPut("Edit-Mcq-Question/{id}")]
         public IActionResult EditMcqQuestion(McqDTO mcqDTO, int id)
         {
             if (mcqDTO == null) return BadRequest();
@@ -137,7 +139,7 @@ namespace ExamSystem.Controllers
         }
 
         ///////////////////Delete TFQuestion//////////////////////
-        [HttpDelete("/api/DeleteMcqQuestion/{id}")]
+        [HttpDelete("api/Delete-Mcq-Question/{id}")]
         public IActionResult DeleteMcqQuestion(int id)
         {
             var mcq = McqRepository.GetByID(id);

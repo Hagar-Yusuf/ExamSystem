@@ -1,0 +1,82 @@
+<!-- Enhanced Exam Questions Form -->
+<div *ngIf="currentExam" class="exam-container">
+    <div class="exam-header">
+        <h2 class="exam-title">{{ currentExam.title }}</h2>
+    </div>
+
+    <div class="exam-content">
+        <form (ngSubmit)="submitExam()" class="exam-form">
+            <div *ngFor="let question of currentExam.questions; let i = index" class="question-card">
+                <div class="question-header">
+                    <span class="question-number">{{ i + 1 }}</span>
+                    <p class="question-text">{{ question.body }}</p>
+                </div>
+
+                <!-- For MCQ Questions -->
+                <div *ngIf="question.type === 'MCQ'" class="options-container">
+                    <div *ngFor="let option of question.options" class="option-wrapper">
+                        <label class="option-label">
+                            <input type="radio" [name]="'q_' + question.questionId" [value]="option"
+                                (change)="selectAnswer(question.questionId, option)" required class="option-input">
+                            <span class="option-text">{{ option }}</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- For True/False Questions -->
+                <div *ngIf="question.type === 'TrueFalse'" class="options-container">
+                    <div class="option-wrapper">
+                        <label class="option-label">
+                            <input type="radio" [name]="'q_' + question.questionId" value="True"
+                                (change)="selectAnswer(question.questionId, 'True')" required class="option-input">
+                            <span class="option-text">True</span>
+                        </label>
+                    </div>
+                    <div class="option-wrapper">
+                        <label class="option-label">
+                            <input type="radio" [name]="'q_' + question.questionId" value="False"
+                                (change)="selectAnswer(question.questionId, 'False')" required class="option-input">
+                            <span class="option-text">False</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="question-divider"></div>
+            </div>
+
+            <div class="submit-section">
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Submit Exam</span>
+                    <span class="btn-icon">→</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- List of All Exams -->
+<div class="exams-list-container" *ngIf="!currentExam">
+    <h3 class="exams-list-title">Available Exams</h3>
+
+    <div *ngIf="allExams.length > 0; else noAllExams" class="exams-grid">
+        <div *ngFor="let exam of allExams" class="exam-card">
+            <div class="exam-card-header">
+                <h4 class="exam-card-title">{{ exam.title }}</h4>
+                <span class="exam-duration">{{ exam.duration }} hours</span>
+            </div>
+            <div class="exam-card-actions">
+                <button (click)="startExam(exam.exam_ID)" class="start-exam-btn">
+                    <span class="btn-text">Start Exam</span>
+                    <span class="btn-icon">▶</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #noAllExams>
+        <div class="no-exams-state">
+            <div class="no-exams-icon">📝</div>
+            <p class="no-exams-text">No exams exist in the system yet.</p>
+        </div>
+    </ng-template>
+</div>

@@ -1,30 +1,49 @@
 ﻿using ExamSystem.DTOs;
 using ExamSystem.Models;
 using ExamSystem.Repositories.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ExamSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ExamController : ControllerBase
     {
-        IExamRepository examRepository;
+        private readonly IExamRepository examRepository;
+
         public ExamController(IExamRepository examRepo)
         {
-               examRepository = examRepo;
+            examRepository = examRepo;
         }
 
-                          ///////////////////GetByID//////////////////////
-        [HttpGet("/api/ViewExamByID/{id}")]
+        private int? GetUserIdFromToken()
+        {
+            var claim = User.FindFirst(ClaimTypes.NameIdentifier);
+            return claim != null ? int.Parse(claim.Value) : null;
+        }
+
+        private string GetUserRoleFromToken()
+        {
+            return User.FindFirst(ClaimTypes.Role)?.Value;
+        }
+
+        [HttpGet("ViewExam/{id}")]
         public IActionResult GetByID(int id)
         {
+            int? userId = GetUserIdFromToken();
+            string role = GetUserRoleFromToken();
+
+            if (userId == null || role != "Admin")
+                return Unauthorized("Invalid token or role.");
+
             var exam = examRepository.GetByID(id);
             if (exam == null)
                 return NotFound();
 
-            var examDTO = new ExamDTO
+            var examDTO = new ExamDto
             {
                 Exam_ID = exam.Exam_ID,
                 Title = exam.Title,
@@ -32,66 +51,76 @@ namespace ExamSystem.Controllers
                 Duration = exam.Duration
             };
             return Ok(examDTO);
-
-
         }
-        ///////////////////Get ALL Exams//////////////////////
+
         [HttpGet("ViewAllExams")]
         public IActionResult GetAll()
         {
-            var exams = examRepository.GetAll().ToList();
-            List<ExamDTO> examDTOs = new List<ExamDTO>();
-            foreach(Exam ex in exams)
-            {
-                ExamDTO exDto = new ExamDTO()
-                {
-                    Exam_ID = ex.Exam_ID,
-                    Title = ex.Title,
-                    Description = ex.Description,
-                    Duration = ex.Duration
+            int? userId = GetUserIdFromToken();
+            string role = GetUserRoleFromToken();
 
-                };
-                examDTOs.Add(exDto);
-            }
+            if (userId == null || role != "Admin")
+                return Unauthorized("Invalid token or role.");
+
+            var exams = examRepository.GetAll().ToList();
+            var examDTOs = exams.Select(ex => new ExamDto
+            {
+                Exam_ID = ex.Exam_ID,
+                Title = ex.Title,
+                Description = ex.Description,
+                Duration = ex.Duration
+            }).ToList();
+
             return Ok(examDTOs);
-            
         }
 
-        ///////////////////Add Exam//////////////////////
         [HttpPost("AddExam")]
-        public IActionResult AddExam(ExamDTO examDTO)
+        public IActionResult AddExam(ExamDto examDTO)
         {
+            int? userId = GetUserIdFromToken();
+            string role = GetUserRoleFromToken();
+
+            if (userId == null || role != "Admin")
+                return Unauthorized("Invalid token or role.");
+
             if (examDTO == null) return BadRequest();
 
             if (ModelState.IsValid)
             {
-                var Exam = new Exam
+                var exam = new Exam
                 {
                     Title = examDTO.Title,
                     Description = examDTO.Description,
                     Duration = examDTO.Duration
                 };
-                examRepository.Add(Exam);
+                examRepository.Add(exam);
                 examRepository.Save();
-                return CreatedAtAction("GetByID", new {id = Exam.Exam_ID}, examDTO);
-
+                return CreatedAtAction("GetByID", new { id = exam.Exam_ID }, examDTO);
             }
             else
             {
                 return BadRequest(ModelState);
             }
         }
-        ///////////////////Edit Exam//////////////////////
+
         [HttpPut("EditExam/{id}")]
-        public IActionResult EditExam(ExamDTO examDTO,int id)
+        public IActionResult EditExam(ExamDto examDTO, int id)
         {
-           if(examDTO == null) return BadRequest();
-           if(examDTO.Exam_ID != id) return BadRequest("Mismatched question ID.");
-           if (ModelState.IsValid)
+            int? userId = GetUserIdFromToken();
+            string role = GetUserRoleFromToken();
+
+            if (userId == null || role != "Admin")
+                return Unauthorized("Invalid token or role.");
+
+            if (examDTO == null) return BadRequest();
+            if (examDTO.Exam_ID != id) return BadRequest("Mismatched exam ID.");
+
+            if (ModelState.IsValid)
             {
                 var exam = examRepository.GetByID(id);
                 if (exam == null)
                     return NotFound($"No exam found with ID {id}");
+
                 exam.Title = examDTO.Title;
                 exam.Description = examDTO.Description;
                 exam.Duration = examDTO.Duration;
@@ -99,35 +128,37 @@ namespace ExamSystem.Controllers
                 examRepository.Update(exam);
                 examRepository.Save();
                 return NoContent();
-               
             }
             else
             {
                 return BadRequest();
             }
-
         }
-        ///////////////////Delete Exam//////////////////////
-        [HttpDelete("/api/DeleteExam/{id}")]
+
+        [HttpDelete("DeleteExam/{id}")]
         public IActionResult DeleteExam(int id)
         {
+            int? userId = GetUserIdFromToken();
+            string role = GetUserRoleFromToken();
+
+            if (userId == null || role != "Admin")
+                return Unauthorized("Invalid token or role.");
+
             var exam = examRepository.GetByID(id);
-            if (exam == null) return NotFound();
-            else
+            if (exam == null)
+                return NotFound();
+
+            var examDTO = new ExamDto
             {
-                ExamDTO examDTO = new ExamDTO()
-                {
-                    Exam_ID = exam.Exam_ID,
-                    Title = exam.Title,
-                    Description = exam.Description,
-                    Duration = exam.Duration,
-                };
-                examRepository.Delete(id);
-                examRepository.Save();
-                return Ok(examDTO);
-            }
+                Exam_ID = exam.Exam_ID,
+                Title = exam.Title,
+                Description = exam.Description,
+                Duration = exam.Duration
+            };
 
+            examRepository.Delete(id);
+            examRepository.Save();
+            return Ok(examDTO);
         }
-
     }
 }

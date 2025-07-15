@@ -26,7 +26,7 @@ export class ExamService {
 
   // ✅ Get all exams
   getAllExams(): Observable<Exam[]> {
-    return this.http.get<Exam[]>(`${this.baseUrl}/ViewAllExams`, {
+    return this.http.get<Exam[]>(${this.baseUrl}/ViewAllExams, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)
@@ -35,7 +35,7 @@ export class ExamService {
 
   // ✅ Get exam by ID
   getExamById(id: number): Observable<Exam> {
-    return this.http.get<Exam>(`${this.getByIdUrl}/${id}`, {
+    return this.http.get<Exam>(${this.getByIdUrl}/${id}, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)
@@ -44,7 +44,7 @@ export class ExamService {
 
   // ✅ Edit exam
 editExam(id: number, updatedExam: Partial<Exam>): Observable<Exam> {
-  return this.http.put<Exam>(`${this.baseUrl}/EditExam/${id}`, updatedExam, {
+  return this.http.put<Exam>(${this.baseUrl}/EditExam/${id}, updatedExam, {
     withCredentials: true
   }).pipe(
     catchError(this.handleError)
@@ -57,7 +57,7 @@ editExam(id: number, updatedExam: Partial<Exam>): Observable<Exam> {
 
   // ✅ Delete exam
   deleteExam(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/DeleteExam/${id}`, {
+    return this.http.delete<void>(${this.baseUrl}/DeleteExam/${id}, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)
@@ -66,7 +66,7 @@ editExam(id: number, updatedExam: Partial<Exam>): Observable<Exam> {
 
   // ✅ Create new exam (no exam_ID passed)
   createExam(exam: CreateExamDto): Observable<Exam> {
-    return this.http.post<Exam>(`${this.baseUrl}/AddExam`, exam, {
+    return this.http.post<Exam>(${this.baseUrl}/AddExam, exam, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)

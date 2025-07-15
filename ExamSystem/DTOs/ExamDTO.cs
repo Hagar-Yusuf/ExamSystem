@@ -2,9 +2,8 @@
 
 namespace ExamSystem.DTOs
 {
-    public class ExamDTO
+    public class ExamDto
     {
-
         public int Exam_ID { get; set; }
         [Required(ErrorMessage = "Title is required.")]
         [StringLength(30,ErrorMessage = "Title must be 30 characters or less.")]
@@ -17,6 +16,10 @@ namespace ExamSystem.DTOs
         [Required(ErrorMessage = "Duration is required.")]
         [Range(1, 6, ErrorMessage = "Duration must be between 1 and 6 hours.")]
         public int? Duration { get; set; }
+
+        public List<QuestionDto> Questions { get; set; }
+
+
 
     }
 }
