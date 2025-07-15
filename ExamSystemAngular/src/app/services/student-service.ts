@@ -1,5 +1,7 @@
+// src/app/services/student-service.ts
+
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,28 +9,40 @@ import { Observable } from 'rxjs';
 })
 export class StudentService {
   private http = inject(HttpClient);
-
   private apiUrl = 'https://localhost:7003/api/student';
 
+  // ✅ Helper method to include JWT token in headers
+  private getAuthHeaders() {
+    const token = sessionStorage.getItem('token');
+    return {
+      headers: new HttpHeaders({
+        Authorization: `Bearer ${token}`
+      })
+    };
+  }
 
+  // ✅ Get all available exams for student
   GetAllExams(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/allexams`);
+    return this.http.get(`${this.apiUrl}/exams`, this.getAuthHeaders());
   }
 
-  StartExam(examId: number, studentId: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/exams/${examId}/start?studentId=${studentId}`, {});
+  // ✅ Start exam for student
+  StartExam(examId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/exams/${examId}/start`, {}, this.getAuthHeaders());
   }
 
-
-  GetExamWithQuestions(examId: number, studentId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/exams/${examId}?studentId=${studentId}`);
+  // ✅ Get exam questions for the student
+  GetExamWithQuestions(examId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/exams/${examId}`, this.getAuthHeaders());
   }
 
+  // ✅ Submit exam answers
   SubmitExam(submitExamDto: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/exams/submit`, submitExamDto);
+    return this.http.post(`${this.apiUrl}/exams/submit`, submitExamDto, this.getAuthHeaders());
   }
 
-  GetResults(studentId: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/results?studentId=${studentId}`);
+  // ✅ Get student's exam results
+  GetResults(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/results`, this.getAuthHeaders());
   }
 }

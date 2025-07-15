@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { McqQuestionService } from '../../../../services/mcq-question.service';
 import { MCQQuestion } from '../../../../Models/mcq-question.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mcq-list',

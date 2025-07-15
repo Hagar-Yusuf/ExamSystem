@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { StudentService } from '../../../services/student-service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; // Import Router
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-start-exam',
@@ -11,44 +11,37 @@ import { Router } from '@angular/router'; // Import Router
   styleUrls: ['./start-exam.css']
 })
 export class StartExamComponent implements OnInit {
+  private studentService = inject(StudentService);
+  private router = inject(Router);
+
   availableExams: any[] = [];
   currentExam: any = null;
-  allExams: any[] = [];
   answers: { [questionId: number]: string } = {};
-  studentId: number = 6;
-
-  constructor(private studentService: StudentService, private router: Router) { }
+  allExams: any[] = [];
 
   ngOnInit(): void {
-
-    this.loadAllExams();
-
+    this.loadAvailableExams();
   }
 
-  loadAllExams(): void {
+  loadAvailableExams(): void {
     this.studentService.GetAllExams().subscribe({
-      next: (exams) => this.allExams = exams,
-      error: (err) => console.error('Failed to load all exams:', err)
+      next: (exams) => this.availableExams = exams,
+      error: (err) => console.error('Failed to load exams:', err)
     });
   }
 
-
   startExam(examId: number): void {
-    this.studentService.StartExam(examId, this.studentId).subscribe({
-      next: () => {
-        this.loadExamWithQuestions(examId);
-      },
+    this.studentService.StartExam(examId).subscribe({
+      next: () => this.loadExamWithQuestions(examId),
       error: (err) => console.error('Failed to start exam:', err)
     });
   }
 
-
   loadExamWithQuestions(examId: number): void {
-    this.studentService.GetExamWithQuestions(examId, this.studentId).subscribe({
+    this.studentService.GetExamWithQuestions(examId).subscribe({
       next: (exam) => {
         this.currentExam = exam;
         this.answers = {};
-        console.log('Exam loaded:', exam);
       },
       error: (err) => console.error('Failed to load exam questions:', err)
     });
@@ -61,21 +54,17 @@ export class StartExamComponent implements OnInit {
   submitExam(): void {
     const submitExamDto = {
       exam_ID: this.currentExam.exam_ID,
-      student_ID: this.studentId,
-      answers: Object.entries(this.answers).map(([questionId, answer]) => ({
+      answers: Object.entries(this.answers).map(([questionId, selectedAnswer]) => ({
         question_ID: +questionId,
-        selectedAnswer: answer
+        selectedAnswer
       }))
     };
 
-
     this.studentService.SubmitExam(submitExamDto).subscribe({
-      next: (score) => {
-        alert(`Exam submitted! Your score is: ${score}`);
+      next: (res) => {
+        alert(`Exam submitted! Your score is: ${res.score}`);
         this.currentExam = null;
         this.answers = {};
-
-        // Redirect to results page
         this.router.navigate(['/student/results']);
       },
       error: (err) => console.error('Failed to submit exam:', err)

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterModule } from '@angular/router';
+import { AuthService } from '../../../services/auth-service';
 
 @Component({
   selector: 'app-header',
@@ -10,20 +11,35 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrl: './header.css'
 })
 export class Header implements OnInit {
-  studentNavItems: any[] = [];
-  adminNavItems: any[] = [];
+  navItems: any[] = [];
+  role = '';
+  isLoggedIn = false;
 
-  ngOnInit() {
-    this.studentNavItems = [
-      { label: 'Exam', route: '/exam' },
-      { label: 'Result', route: '/result' }
-    ];
+  constructor(private auth: AuthService) {}
 
-    this.adminNavItems = [
-      { label: 'Exams', route: '/admin/exam' },
-      { label: 'Questions', route: '/admin/questions' },
-      { label: 'Students', route: '/admin/students' },
-      { label: 'Results', route: '/admin/results' },
-    ];
+  ngOnInit(): void {
+    this.isLoggedIn = this.auth.isAuthenticated();
+
+    if (!this.isLoggedIn) return;
+
+    this.role = this.auth.getRole();
+
+    if (this.role === 'Student') {
+      this.navItems = [
+        { label: 'Take Exam', route: '/student/exams' },
+        { label: 'My Results', route: '/student/results' }
+      ];
+    } else if (this.role === 'Admin') {
+      this.navItems = [
+        { label: 'Exams', route: '/admin/exam' },
+        { label: 'Questions', route: '/admin/mcq' },
+        { label: 'Students', route: '/admin/students' },
+        { label: 'Results', route: '/admin/results' }
+      ];
+    }
+  }
+
+  logout(): void {
+    this.auth.logout();
   }
 }

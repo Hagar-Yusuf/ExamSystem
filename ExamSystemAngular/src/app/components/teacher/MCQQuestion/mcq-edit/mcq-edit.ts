@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MCQQuestion } from '../../../../Models/mcq-question.model';
 import { McqQuestionService } from '../../../../services/mcq-question.service';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-mcq-edit',

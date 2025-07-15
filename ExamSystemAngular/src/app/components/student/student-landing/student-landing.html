@@ -1,0 +1,19 @@
+<div *ngIf="loading">Loading exams...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="!loading && !error">
+  <h2>Available Exams</h2>
+
+  <ul *ngIf="exams.length > 0; else noExams">
+    <li *ngFor="let exam of exams">
+      {{ exam.title }} (Duration: {{ exam.duration }} min)
+      <button (click)="startExam(exam.exam_ID)">Start Exam</button>
+    </li>
+  </ul>
+
+  <ng-template #noExams>
+    <p>No exams available.</p>
+  </ng-template>
+
+  <hr />
+</div>
