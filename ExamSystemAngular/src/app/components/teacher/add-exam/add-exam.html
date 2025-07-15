@@ -1,0 +1,24 @@
+<!-- create-exam.html -->
+<div class="container">
+  <h2>Create New Exam</h2>
+
+  <form (ngSubmit)="onSubmit()" #examForm="ngForm">
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required [(ngModel)]="exam.title">
+    </div>
+
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" required [(ngModel)]="exam.description"></textarea>
+    </div>
+
+    <div>
+      <label for="duration">Duration (minutes):</label>
+      <input type="number" id="duration" name="duration" required [(ngModel)]="exam.duration">
+    </div>
+
+    <button type="submit">Create Exam</button>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  </form>
+</div>

@@ -6,7 +6,8 @@ import { Exam } from '../../../services/exam-service';
 @Component({
   selector: 'app-exam-details',
   templateUrl: './exam-details.html',
-  styleUrls: ['./exam-details.css']
+  styleUrls: ['./exam-details.css'],
+  standalone:true
 })
 export class ExamDetails implements OnInit {
   exam: Exam | null = null;

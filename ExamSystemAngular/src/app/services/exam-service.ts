@@ -14,38 +14,55 @@ export interface Exam {
   providedIn: 'root'
 })
 export class ExamService {
+  
   private http = inject(HttpClient);
 
-  private allExamsUrl = 'https://localhost:7003/api/Exam/ViewAllExams';
-  private examByIdUrl = 'https://localhost:7003/api/ViewExamByID'; // Notice: No /Exam prefix
+  private baseUrl = 'https://localhost:7003/api/Exam';
+  private getByIdUrl = 'https://localhost:7003/api/ViewExamByID';
 
-  // ✅ Get all exams
+  // Get all exams
   getAllExams(): Observable<Exam[]> {
-    return this.http.get<Exam[]>(this.allExamsUrl, {
+    return this.http.get<Exam[]>(`${this.baseUrl}/ViewAllExams`, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)
     );
   }
 
-  // ✅ Get exam by ID
+  // Get exam by ID
   getExamById(id: number): Observable<Exam> {
-    return this.http.get<Exam>(`${this.examByIdUrl}/${id}`, {
+    return this.http.get<Exam>(`${this.getByIdUrl}/${id}`, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)
     );
   }
 
-  // ✅ Delete exam by ID (optional, since you had it in earlier code)
+  // Edit exam
+  editExam(id: number, updatedExam: Exam): Observable<Exam> {
+    return this.http.put<Exam>(`${this.baseUrl}/EditExam/${id}`, updatedExam, {
+      withCredentials: true
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Delete exam
   deleteExam(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.allExamsUrl}/${id}`, {
+    return this.http.delete<void>(`${this.baseUrl}/DeleteExam/${id}`, {
       withCredentials: true
     }).pipe(
       catchError(this.handleError)
     );
   }
 
+  createExam(exam: Exam): Observable<Exam> {
+    return this.http.post<Exam>(`${this.baseUrl}/AddExam`, exam, {
+      withCredentials: true
+    }).pipe(
+      catchError(this.handleError)
+    );
+  }
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
     return throwError(() => new Error(
