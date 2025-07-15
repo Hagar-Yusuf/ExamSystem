@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <h4>Add MCQ</h4>
+  <form (ngSubmit)="submit()">
+
+    <!-- Question Body -->
+    <div class="form-group mb-2">
+      <label>Question</label>
+      <input [(ngModel)]="form.body" name="body" class="form-control" required>
+    </div>
+
+    <!-- Correct Answer -->
+    <div class="form-group mb-2">
+      <label>Correct Answer</label>
+      <input [(ngModel)]="form.correctAnswer" name="correctAnswer" class="form-control" required>
+    </div>
+
+    <!-- Options styled like checkboxes -->
+    <label>Options</label>
+    
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" id="option1" checked disabled>
+      <label class="form-check-label" for="option1">Option 1</label>
+      <input [(ngModel)]="form.option1" name="option1" class="form-control mt-1" placeholder="Enter option 1" required>
+    </div>
+
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" id="option2" checked disabled>
+      <label class="form-check-label" for="option2">Option 2</label>
+      <input [(ngModel)]="form.option2" name="option2" class="form-control mt-1" placeholder="Enter option 2" required>
+    </div>
+
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" id="option3" checked disabled>
+      <label class="form-check-label" for="option3">Option 3</label>
+      <input [(ngModel)]="form.option3" name="option3" class="form-control mt-1" placeholder="Enter option 3" required>
+    </div>
+
+    <div class="form-check mb-2">
+      <input type="checkbox" class="form-check-input" id="option4" checked disabled>
+      <label class="form-check-label" for="option4">Option 4</label>
+      <input [(ngModel)]="form.option4" name="option4" class="form-control mt-1" placeholder="Enter option 4" required>
+    </div>
+
+    <!-- Mark -->
+    <div class="form-group mb-2">
+      <label>Mark</label>
+      <input [(ngModel)]="form.mark" name="mark" type="number" class="form-control" required>
+    </div>
+
+    <!-- Exam ID -->
+    <div class="form-group mb-3">
+      <label>Exam ID</label>
+      <input [(ngModel)]="form.exam_ID" name="exam_ID" type="number" class="form-control" required>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Submit</button>
+  </form>
+</div>

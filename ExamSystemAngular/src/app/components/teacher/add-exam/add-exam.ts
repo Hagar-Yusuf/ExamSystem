@@ -1,32 +1,33 @@
-// import { Component } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { CommonModule } from '@angular/common';
-// import { FormsModule } from '@angular/forms';
-// import { ExamService } from '../../../services/exam-service';
+// src/app/components/teacher/add-exam/add-exam.ts
 
-// @Component({
-//   selector: 'app-create-exam',
-//   standalone: true,
-//   templateUrl: './add-exam.html',
-//   styleUrls: ['./add-exam.css'],
-//   imports: [CommonModule, FormsModule]
-// })
-// export class AddExam {
-//   exam: Omit<any, 'exam_ID'> = {
-//     title: '',
-//     description: '',
-//     duration: 0
-//   };
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { ExamService, CreateExamDto } from '../../../services/exam-service';
 
-//   errorMessage = '';
+@Component({
+  selector: 'app-create-exam',
+  standalone: true,
+  templateUrl: './add-exam.html',
+  styleUrls: ['./add-exam.css'],
+  imports: [CommonModule, FormsModule]
+})
+export class AddExam {
+  exam: CreateExamDto = {
+    title: '',
+    description: '',
+    duration: 0
+  };
 
-//   constructor(private examService: ExamService, private router: Router) {}
+  errorMessage = '';
 
-//   onSubmit() {
-//     console.log('Creating exam:', this.exam);  // Helpful for debugging
-//     this.examService.createExam(this.exam).subscribe({
-//       next: () => this.router.navigate(['/exam']),
-//       error: (err) => this.errorMessage = 'Create failed: ' + err.message
-//     });
-//   }
-// }
+  constructor(private examService: ExamService, private router: Router) {}
+
+  onSubmit() {
+    this.examService.createExam(this.exam).subscribe({
+      next: () => this.router.navigate(['/exam']),
+      error: (err) => this.errorMessage = 'Create failed: ' + err.message
+    });
+  }
+}
