@@ -15,15 +15,15 @@ export class Header implements OnInit {
 
   ngOnInit() {
     this.studentNavItems = [
-      { label: 'Exams', route: '/exam' },
-      { label: 'Results', route: '/results' }
+      { label: 'Exam', route: '/exam' },
+      { label: 'Result', route: '/result' }
     ];
 
     this.adminNavItems = [
-      { label: 'Exams', route: '/admin/exam'},
-      { label: 'Questions', route: '/admin/questions'},
+      { label: 'Exams', route: '/admin/exam' },
+      { label: 'Questions', route: '/admin/questions' },
       { label: 'Students', route: '/admin/students' },
-      { label: 'Results', route: '/admin/results'},
+      { label: 'Results', route: '/admin/results' },
     ];
   }
 }

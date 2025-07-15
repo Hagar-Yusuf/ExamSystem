@@ -31,8 +31,8 @@ export class ExamService {
   private handleError(error: HttpErrorResponse) {
     console.error('API Error:', error);
     return throwError(() => new Error(
-      error.error?.message || 
-      error.message || 
+      error.error?.message ||
+      error.message ||
       'An unknown error occurred'
     ));
   }
