@@ -15,6 +15,7 @@ export class AllExamsComponent implements OnInit {
   private examService = inject(ExamService);
   private router = inject(Router);
 
+  
   exams = signal<Exam[]>([]);
   loading = signal(false);
   error = signal('');
@@ -38,6 +39,10 @@ export class AllExamsComponent implements OnInit {
         this.loading.set(false);
       }
     });
+  }
+
+  editExam(id: number) {
+    this.router.navigate([`/exam/edit/${id}`]);
   }
 
   deleteExam(id: number) {
@@ -71,4 +76,9 @@ export class AllExamsComponent implements OnInit {
     this.showDeleteModal.set(false);
     this.examToDelete.set(null);
   }
+
+  AddExam() {
+  this.router.navigate(['/exam/add']); 
+}
+
 }

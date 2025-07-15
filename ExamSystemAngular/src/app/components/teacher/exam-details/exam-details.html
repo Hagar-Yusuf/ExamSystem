@@ -1,0 +1,13 @@
+
+@if (exam; as e) {
+
+  <div class="exam-container">
+<h2 class="text-center ">Exam Details</h2>
+    <p><strong>ID:</strong> {{ e.exam_ID }}</p>
+    <p><strong>Title:</strong> {{ e.title }}</p>
+    <p><strong>Description:</strong> {{ e.description }}</p>
+    <p><strong>Duration:</strong> {{ e.duration }} minutes</p>
+  </div>
+} @else {
+  <p>No exam details available.</p>
+}

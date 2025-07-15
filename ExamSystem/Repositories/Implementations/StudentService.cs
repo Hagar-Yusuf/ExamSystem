@@ -13,24 +13,9 @@ namespace ExamSystem.Repositories.Implementations
             _context = context;
         }
 
-        public User Register(RegisterDto dto)
-        {
-            var user = new User
-            {
-                Name = dto.Name,
-                Email = dto.Email,
-                Password = dto.Password,
-                Role = "Student"
-            };
-
-            _context.Users.Add(user);
-            _context.SaveChanges();
-            return user;
-        }
-
         public List<AvailableExamDto> GetAvailableExamsForStudent(int studentId)
         {
-            var exams = _context.StudentExams
+            return _context.StudentExams
                 .Where(se => se.Student_ID == studentId)
                 .Select(se => new AvailableExamDto
                 {
@@ -38,23 +23,15 @@ namespace ExamSystem.Repositories.Implementations
                     Title = se.Exam.Title,
                     Description = se.Exam.Description,
                     Duration = (int)se.Exam.Duration,
-                    IsSubmitted = se.isSubmitted == "True"
+                    IsSubmitted = se.isSubmitted
                 })
                 .ToList();
-
-            return exams;
         }
-
-
 
         public ExamDto GetExamWithQuestions(int examId, int studentId)
         {
-            var exam = _context.Exams
-                .Where(e => e.Exam_ID == examId)
-                .FirstOrDefault();
-
-            var studentExam = _context.StudentExams
-                .FirstOrDefault(se => se.Exam_ID == examId && se.Student_ID == studentId);
+            var exam = _context.Exams.FirstOrDefault(e => e.Exam_ID == examId);
+            var studentExam = _context.StudentExams.FirstOrDefault(se => se.Exam_ID == examId && se.Student_ID == studentId);
 
             if (exam == null || studentExam == null) return null;
 
@@ -95,15 +72,13 @@ namespace ExamSystem.Repositories.Implementations
                 {
                     Student_ID = studentId,
                     Exam_ID = examId,
-                    isSubmitted = "False"
+                    isSubmitted = false
                 };
                 _context.StudentExams.Add(studentExam);
                 _context.SaveChanges();
             }
 
-            var exam = _context.Exams
-                .FirstOrDefault(e => e.Exam_ID == examId);
-
+            var exam = _context.Exams.FirstOrDefault(e => e.Exam_ID == examId);
             if (exam == null) return null;
 
             return new ExamDto
@@ -132,13 +107,9 @@ namespace ExamSystem.Repositories.Implementations
             };
         }
 
-
         public double SubmitExam(SubmitExamDto dto)
         {
-            var exam = _context.Exams
-                .Where(e => e.Exam_ID == dto.ExamId)
-                .FirstOrDefault();
-
+            var exam = _context.Exams.FirstOrDefault(e => e.Exam_ID == dto.ExamId);
             if (exam == null) return 0;
 
             double totalScore = 0;
@@ -185,7 +156,9 @@ namespace ExamSystem.Repositories.Implementations
                 .FirstOrDefault(se => se.Student_ID == dto.StudentId && se.Exam_ID == dto.ExamId);
 
             if (studentExam != null)
-                studentExam.isSubmitted = "yes";
+            {
+                studentExam.isSubmitted = true;
+            }
 
             _context.Results.Add(new Result
             {
@@ -211,6 +184,5 @@ namespace ExamSystem.Repositories.Implementations
                 })
                 .ToList();
         }
-
     }
 }
