@@ -21,16 +21,17 @@
         <td>{{ exam.title }}</td>
         <td>{{ exam.description }}</td>
         <td>{{ exam.duration }}</td>
-        <td>
-          <button class="btn btn-sm btn-info me-2" (click)="viewDetails(exam.exam_ID)">View</button>
-          <button class="btn btn-sm btn-success me-2" (click)="editExam(exam.exam_ID)">Edit</button>
-          <button class="btn btn-sm btn-danger" (click)="deleteExam(exam.exam_ID)">Delete</button>
-        </td>
+<td>
+  <div class="action-buttons">
+    <button class="btn btn-info btn-sm" (click)="viewDetails(exam.exam_ID)">View</button>
+    <button class="btn btn-success btn-sm" (click)="editExam(exam.exam_ID)">Edit</button>
+    <button class="btn btn-danger btn-sm" (click)="deleteExam(exam.exam_ID)">Delete</button>
+  </div>
+</td>
+
       </tr>
     </tbody>
   </table>
-  <!-- table is already defined in your file -->
-
 <!-- Confirmation Modal -->
 <div *ngIf="showDeleteModal()" class="modal-overlay">
   <div class="modal-content">

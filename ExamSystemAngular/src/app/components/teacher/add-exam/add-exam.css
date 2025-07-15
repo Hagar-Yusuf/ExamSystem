@@ -1,38 +1,47 @@
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  background: #fff;
+/* create-exam.css */
+.container {
+  max-width: 500px;
+  margin: 20px auto;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  background-color: #f8f8f8;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 label {
-  font-weight: 500;
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 input, textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 15px;
+  width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-button[type="submit"] {
-  align-self: flex-start;
-  background-color: #007bff;
+  background-color: #007acc;
   color: white;
-  padding: 8px 16px;
   border: none;
-  border-radius: 6px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-button[type="submit"]:hover {
-  background-color: #0056b3;
+button:hover {
+  background-color: #005fa3;
 }
 
 .error {
   color: red;
-  font-weight: 500;
+  margin-top: 10px;
 }
