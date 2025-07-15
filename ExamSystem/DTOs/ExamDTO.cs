@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace ExamSystem.DTOs
 {
@@ -14,10 +15,10 @@ namespace ExamSystem.DTOs
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Duration is required.")]
-        [Range(1, 6, ErrorMessage = "Duration must be between 1 and 6 hours.")]
+        [Range(1, int.MaxValue, ErrorMessage = "Duration must be at least 1 minute.")]
         public int? Duration { get; set; }
-
-        public List<QuestionDto> Questions { get; set; }
+        [ValidateNever]
+        public List<QuestionDto>? Questions { get; set; }
 
 
 

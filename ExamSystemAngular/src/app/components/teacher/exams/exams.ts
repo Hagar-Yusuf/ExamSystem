@@ -1,3 +1,4 @@
+// src/app/components/teacher/exams/exams.ts
 import { Component, inject, signal, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +16,6 @@ export class AllExamsComponent implements OnInit {
   private examService = inject(ExamService);
   private router = inject(Router);
 
-  
   exams = signal<Exam[]>([]);
   loading = signal(false);
   error = signal('');
@@ -26,26 +26,24 @@ export class AllExamsComponent implements OnInit {
     this.loadExams();
   }
 
-loadExams() {
-  this.loading.set(true);
-  this.error.set('');
+  loadExams() {
+    this.loading.set(true);
+    this.error.set('');
+    this.examService.getAllExams().subscribe({
+      next: (data) => {
+        this.exams.set(data);
+        this.loading.set(false);
+      },
+      error: (err) => {
+        this.error.set('Failed to load exams: ' + err.message);
+        this.loading.set(false);
+      }
+    });
+  }
 
-  this.examService.getAllExams().subscribe({
-    next: (data) => {
-      this.exams.set(data);
-      this.loading.set(false);
-    },
-    error: (err) => {
-      this.error.set('Failed to load exams: ' + err.message);
-      this.loading.set(false);
-    }
-  });
-}
-
-
-editExam(id: number) {
-  this.router.navigate([`/admin/exam/edit/${id}`]);
-}
+  editExam(id: number) {
+    this.router.navigate([`/admin/exam/edit/${id}`]);
+  }
 
   deleteExam(id: number) {
     const exam = this.exams().find(e => e.exam_ID === id);
@@ -70,17 +68,16 @@ editExam(id: number) {
     }
   }
 
-viewDetails(examId: number) {
-  this.router.navigate([`/admin/exam/details/${examId}`]);
-}
-
   cancelDelete() {
     this.showDeleteModal.set(false);
     this.examToDelete.set(null);
   }
 
-AddExam() {
-  this.router.navigate(['/admin/exam/add']); 
-}
+  AddExam() {
+    this.router.navigate(['/admin/exam/add']);
+  }
 
+  viewDetails(examId: number) {
+    this.router.navigate([`/admin/exam/details/${examId}`]);
+  }
 }

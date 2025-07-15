@@ -9,10 +9,10 @@ import { CommonModule } from '@angular/common';
   templateUrl: './mcq-details.html',
   standalone: true,
   styleUrls: ['./mcq-details.css'],
-  imports: []
+  imports: [CommonModule]
 })
 export class McqDetails implements OnInit {
-  mcq?: MCQQuestion;
+  mcq!: MCQQuestion;
 
   constructor(private route: ActivatedRoute, private service: McqQuestionService) {}
 

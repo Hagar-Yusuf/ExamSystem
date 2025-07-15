@@ -1,5 +1,4 @@
 // src/app/components/teacher/edit-exam/edit-exam.ts
-
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -37,22 +36,22 @@ export class EditExam implements OnInit {
       error: (err) => this.errorMessage = 'Failed to load exam: ' + err.message
     });
   }
-onSubmit() {
-  const updatedExam = {
-    title: this.exam.title,
-    description: this.exam.description,
-    duration: this.exam.duration
-  };
 
-  this.examService.editExam(this.exam.exam_ID, updatedExam).subscribe({
-    next: () => this.router.navigate(['/exam']),
-    error: (err) => {
-      console.error('Edit error:', err);
-      this.errorMessage = 'Edit failed: ' + (err.message || 'An unknown error occurred');
-    }
-  });
-}
+  onSubmit() {
+const updatedExam = {
+  exam_ID: this.exam.exam_ID,
+  title: this.exam.title,
+  description: this.exam.description,
+  duration: this.exam.duration
+};
 
 
-
+    this.examService.editExam(this.exam.exam_ID, updatedExam).subscribe({
+      next: () => this.router.navigate(['/admin/exam']),
+      error: (err) => {
+        console.error('Edit error:', err);
+        this.errorMessage = 'Edit failed: ' + (err.message || 'An unknown error occurred');
+      }
+    });
+  }
 }

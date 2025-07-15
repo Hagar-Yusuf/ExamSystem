@@ -1,18 +1,29 @@
-<div class="edit-exam-container">
+<div class="container">
   <h2>Edit Exam</h2>
 
   <form (ngSubmit)="onSubmit()">
-    <label for="title">Title:</label>
-    <input type="text" id="title" [(ngModel)]="exam.title" name="title" required />
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" [(ngModel)]="exam.title" required>
+    </div>
 
-    <label for="description">Description:</label>
-    <textarea id="description" [(ngModel)]="exam.description" name="description"></textarea>
+    <div>
+      <label for="description">Description:</label>
+      <textarea id="description" name="description" [(ngModel)]="exam.description" required></textarea>
+    </div>
 
-    <label for="duration">Duration (minutes):</label>
-    <input type="number" id="duration" [(ngModel)]="exam.duration" name="duration" required />
+    <div>
+      <label for="duration">Duration (Minutes):</label>
+      <input
+        type="number"
+        id="duration"
+        name="duration"
+        [(ngModel)]="exam.duration"
+        required
+      >
+    </div>
 
-    <button type="submit">Update</button>
+    <button type="submit">Save Changes</button>
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
   </form>
-
-  <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
 </div>

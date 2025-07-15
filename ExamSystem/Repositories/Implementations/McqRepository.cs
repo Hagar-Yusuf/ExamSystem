@@ -12,11 +12,6 @@ namespace ExamSystem.Repositories.Implementations
             Db = db;
         }
 
-        //GetAll Mcq Question
-        public List<MCQQuestion> GetAll()
-        {
-            return Db.MCQQuestions.ToList();
-        }
 
         //Get Mcq Question by ID
         public MCQQuestion GetByID(int id)
@@ -49,6 +44,16 @@ namespace ExamSystem.Repositories.Implementations
         public void Save()
         {
             Db.SaveChanges();
+        }
+
+        IEnumerable<MCQQuestion> IMcqRepository.GetAll()
+        {
+            return Db.MCQQuestions.ToList();
+        }
+
+        public List<MCQQuestion> GetAll()
+        {
+            throw new NotImplementedException();
         }
     }
 }

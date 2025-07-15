@@ -1,0 +1,81 @@
+<div class="container mt-4">
+  <h3>Add New Question</h3>
+
+  <form (ngSubmit)="onSubmit()" #form="ngForm" novalidate>
+    <div class="mb-3">
+      <label>Question Type:</label>
+      <select [(ngModel)]="question.Type" name="type" class="form-select" required>
+        <option value="MCQ">MCQ</option>
+        <option value="TrueFalse">True/False</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label>Question Body:</label>
+      <textarea [(ngModel)]="question.Body" name="body" required class="form-control"></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label>Mark:</label>
+      <input type="number" [(ngModel)]="question.Mark" name="mark" required min="1" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+      <label>Exam ID:</label>
+      <input type="number" [(ngModel)]="question.Exam_ID" name="examId" required min="1" class="form-control" />
+    </div>
+
+    <!-- MCQ Fields -->
+    <div *ngIf="question.Type === 'MCQ'">
+      <div class="mb-3">
+        <label>Option 1:</label>
+        <input [(ngModel)]="question.Option1" name="option1" required class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Option 2:</label>
+        <input [(ngModel)]="question.Option2" name="option2" required class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Option 3:</label>
+        <input [(ngModel)]="question.Option3" name="option3" required class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Option 4:</label>
+        <input [(ngModel)]="question.Option4" name="option4" required class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Correct Answer:</label>
+        <select [(ngModel)]="question.CorrectAnswer" name="correctAnswer" required class="form-select">
+          <option [value]="question.Option1">{{ question.Option1 }}</option>
+          <option [value]="question.Option2">{{ question.Option2 }}</option>
+          <option [value]="question.Option3">{{ question.Option3 }}</option>
+          <option [value]="question.Option4">{{ question.Option4 }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- True/False Fields -->
+    <div *ngIf="question.Type === 'TrueFalse'">
+      <div class="mb-3">
+        <label>Option 1 (True):</label>
+        <input [(ngModel)]="question.Option1" name="tfOption1" required class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Option 2 (False):</label>
+        <input [(ngModel)]="question.Option2" name="tfOption2" required class="form-control" />
+      </div>
+      <div class="mb-3">
+        <label>Correct Answer:</label>
+        <select [(ngModel)]="question.CorrectAnswerBool" name="correctAnswerBool" required class="form-select">
+          <option [ngValue]="true">True</option>
+          <option [ngValue]="false">False</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid" class="btn btn-primary">Add Question</button>
+  </form>
+
+  <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+</div>

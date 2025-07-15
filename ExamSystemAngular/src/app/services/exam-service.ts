@@ -6,16 +6,14 @@ import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AuthService } from './auth-service';
 
+export type CreateExamDto = Omit<Exam, 'exam_ID'>;
+
 export interface Exam {
   exam_ID: number;
   title: string;
   description: string;
   duration: number;
 }
-
-export type CreateExamDto = Omit<Exam, 'exam_ID'>;
-export type ExamDto = Omit<Exam, 'exam_ID'>;
-
 @Injectable({
   providedIn: 'root'
 })
@@ -43,10 +41,16 @@ export class ExamService {
       .pipe(catchError(this.handleError));
   }
 
-  editExam(id: number, updatedExam: Partial<Exam>): Observable<Exam> {
-    return this.http.put<Exam>(`${this.baseUrl}/EditExam/${id}`, updatedExam, this.getAuthHeaders())
-      .pipe(catchError(this.handleError));
-  }
+editExam(id: number, examDto: Exam) {
+  const token = sessionStorage.getItem('token');
+  const headers = new HttpHeaders({
+    Authorization: `Bearer ${token}`
+  });
+
+  return this.http.put(`https://localhost:7003/api/Exam/EditExam/${id}`, examDto, { headers });
+}
+
+
 
   deleteExam(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/DeleteExam/${id}`, this.getAuthHeaders())

@@ -1,82 +1,107 @@
-<!-- Enhanced Exam Questions Form -->
-<div *ngIf="currentExam" class="exam-container">
-    <div class="exam-header">
-        <h2 class="exam-title">{{ currentExam.title }}</h2>
-    </div>
+<div *ngIf="currentExam" class="exam-container" role="main" aria-live="polite">
+  <div class="exam-header">
+    <h2 class="exam-title">{{ currentExam.title }}</h2>
+  </div>
 
-    <div class="exam-content">
-        <form (ngSubmit)="submitExam()" class="exam-form">
-            <div *ngFor="let question of currentExam.questions; let i = index" class="question-card">
-                <div class="question-header">
-                    <span class="question-number">{{ i + 1 }}</span>
-                    <p class="question-text">{{ question.body }}</p>
-                </div>
+  <div class="exam-content">
+    <form (ngSubmit)="submitExam()" class="exam-form" #examForm="ngForm" novalidate>
+      <div *ngFor="let question of currentExam.questions; let i = index" class="question-card" [attr.aria-labelledby]="'question-label-' + question.questionId" role="group">
+        <div class="question-header">
+          <span class="question-number">Q{{ i + 1 }}.</span>
+          <p id="{{'question-label-' + question.questionId}}" class="question-text">{{ question.body }}</p>
+        </div>
 
-                <!-- For MCQ Questions -->
-                <div *ngIf="question.type === 'MCQ'" class="options-container">
-                    <div *ngFor="let option of question.options" class="option-wrapper">
-                        <label class="option-label">
-                            <input type="radio" [name]="'q_' + question.questionId" [value]="option"
-                                (change)="selectAnswer(question.questionId, option)" required class="option-input">
-                            <span class="option-text">{{ option }}</span>
-                        </label>
-                    </div>
-                </div>
+        <!-- MCQ Questions -->
+        <div *ngIf="question.type === 'MCQ'" class="options-container">
+          <div *ngFor="let option of question.options; let idx = index" class="option-wrapper">
+            <label class="option-label" [attr.for]="'q' + question.questionId + '_opt' + (idx+1)">
+              <input
+                type="radio"
+                [name]="'q_' + question.questionId"
+                [id]="'q' + question.questionId + '_opt' + (idx+1)"
+                [value]="idx + 1"
+                (change)="selectAnswer(question, (idx + 1).toString())"
+                required
+                class="option-input"
+              />
+              <span class="option-text">{{ option }}</span>
+            </label>
+          </div>
+        </div>
 
-                <!-- For True/False Questions -->
-                <div *ngIf="question.type === 'TrueFalse'" class="options-container">
-                    <div class="option-wrapper">
-                        <label class="option-label">
-                            <input type="radio" [name]="'q_' + question.questionId" value="True"
-                                (change)="selectAnswer(question.questionId, 'True')" required class="option-input">
-                            <span class="option-text">True</span>
-                        </label>
-                    </div>
-                    <div class="option-wrapper">
-                        <label class="option-label">
-                            <input type="radio" [name]="'q_' + question.questionId" value="False"
-                                (change)="selectAnswer(question.questionId, 'False')" required class="option-input">
-                            <span class="option-text">False</span>
-                        </label>
-                    </div>
-                </div>
+        <!-- True/False Questions -->
+        <div *ngIf="question.type === 'TrueFalse'" class="options-container">
+          <div class="option-wrapper">
+            <label class="option-label" [attr.for]="'q' + question.questionId + '_true'">
+              <input
+                type="radio"
+                [name]="'q_' + question.questionId"
+                [id]="'q' + question.questionId + '_true'"
+                value="True"
+                (change)="selectAnswer(question, 'True')"
+                required
+                class="option-input"
+              />
+              <span class="option-text">True</span>
+            </label>
+          </div>
+          <div class="option-wrapper">
+            <label class="option-label" [attr.for]="'q' + question.questionId + '_false'">
+              <input
+                type="radio"
+                [name]="'q_' + question.questionId"
+                [id]="'q' + question.questionId + '_false'"
+                value="False"
+                (change)="selectAnswer(question, 'False')"
+                required
+                class="option-input"
+              />
+              <span class="option-text">False</span>
+            </label>
+          </div>
+        </div>
 
-                <div class="question-divider"></div>
-            </div>
+        <div class="question-divider" aria-hidden="true"></div>
+      </div>
 
-            <div class="submit-section">
-                <button type="submit" class="submit-btn">
-                    <span class="btn-text">Submit Exam</span>
-                    <span class="btn-icon">→</span>
-                </button>
-            </div>
-        </form>
-    </div>
+      <div class="submit-section">
+        <button
+          type="submit"
+          class="submit-btn"
+          [disabled]="!allQuestionsAnswered"
+          title="Submit your exam answers"
+        >
+          <span class="btn-text">Submit Exam</span>
+          <span class="btn-icon" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
-<!-- List of All Exams -->
+<!-- Available Exams List -->
 <div class="exams-list-container" *ngIf="!currentExam">
-    <h3 class="exams-list-title">Available Exams</h3>
+  <h3 class="exams-list-title">Available Exams</h3>
 
-    <div *ngIf="allExams.length > 0; else noAllExams" class="exams-grid">
-        <div *ngFor="let exam of allExams" class="exam-card">
-            <div class="exam-card-header">
-                <h4 class="exam-card-title">{{ exam.title }}</h4>
-                <span class="exam-duration">{{ exam.duration }} hours</span>
-            </div>
-            <div class="exam-card-actions">
-                <button (click)="startExam(exam.exam_ID)" class="start-exam-btn">
-                    <span class="btn-text">Start Exam</span>
-                    <span class="btn-icon">▶</span>
-                </button>
-            </div>
-        </div>
+  <div *ngIf="availableExams.length > 0; else noAvailableExams" class="exams-grid">
+    <div *ngFor="let exam of availableExams" class="exam-card">
+      <div class="exam-card-header">
+        <h4 class="exam-card-title">{{ exam.title }}</h4>
+        <span class="exam-duration">{{ exam.duration }} min</span>
+      </div>
+      <div class="exam-card-actions">
+        <button (click)="startExam(exam.exam_ID)" class="start-exam-btn" [attr.aria-label]="'Start exam ' + exam.title">
+          <span class="btn-text">Start Exam</span>
+          <span class="btn-icon" aria-hidden="true">▶</span>
+        </button>
+      </div>
     </div>
+  </div>
 
-    <ng-template #noAllExams>
-        <div class="no-exams-state">
-            <div class="no-exams-icon">📝</div>
-            <p class="no-exams-text">No exams exist in the system yet.</p>
-        </div>
-    </ng-template>
+  <ng-template #noAvailableExams>
+    <div class="no-exams-state" role="alert" aria-live="assertive">
+      <div class="no-exams-icon" aria-hidden="true">📝</div>
+      <p class="no-exams-text">No exams are currently available.</p>
+    </div>
+  </ng-template>
 </div>

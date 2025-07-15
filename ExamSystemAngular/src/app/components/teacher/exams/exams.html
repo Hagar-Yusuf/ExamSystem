@@ -29,4 +29,18 @@
       </tr>
     </tbody>
   </table>
+  <!-- table is already defined in your file -->
+
+<!-- Confirmation Modal -->
+<div *ngIf="showDeleteModal()" class="modal-overlay">
+  <div class="modal-content">
+    <h4>Confirm Deletion</h4>
+    <p>Are you sure you want to delete "<strong>{{ examToDelete()?.title }}</strong>"?</p>
+    <div class="modal-actions">
+      <button class="btn btn-danger" (click)="confirmDelete()">Yes, Delete</button>
+      <button class="btn btn-secondary" (click)="cancelDelete()">Cancel</button>
+    </div>
+  </div>
+</div>
+
 </div>

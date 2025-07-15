@@ -1,10 +1,7 @@
-<div class="container mt-4" *ngIf="mcq">
-  <h4>Question Details</h4>
-  <ul class="list-group">
-    <li class="list-group-item"><b>ID:</b> {{ mcq?.question_ID }}</li>
-    <li class="list-group-item"><b>Body:</b> {{ mcq?.body }}</li>
-    <li class="list-group-item"><b>Correct Answer:</b> {{ mcq?.correctAnswer }}</li>
-    <li class="list-group-item"><b>Options:</b> {{ mcq?.option1 }}, {{ mcq?.option2 }}, {{ mcq?.option3 }}, {{ mcq?.option4 }}</li>
-    <li class="list-group-item"><b>Exam ID:</b> {{ mcq?.exam_ID }}</li>
-  </ul>
-</div>
+<ul class="list-group">
+  <li class="list-group-item"><b>ID:</b> {{ mcq.question_ID }}</li>
+  <li class="list-group-item"><b>Body:</b> {{ mcq.body }}</li>
+  <li class="list-group-item"><b>Correct Answer:</b> {{ mcq.correctAnswer }}</li>
+  <li class="list-group-item"><b>Options:</b> {{ mcq.option1 }}, {{ mcq.option2 }}, {{ mcq.option3 }}, {{ mcq.option4 }}</li>
+  <li class="list-group-item"><b>Exam ID:</b> {{ mcq.exam_ID }}</li>
+</ul>

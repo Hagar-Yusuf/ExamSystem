@@ -6,7 +6,6 @@ namespace ExamSystem.DTOs
     {
         public int ExamId { get; set; }
         public List<AnswerDto> Answers { get; set; }
-
         [JsonIgnore]
         public int StudentId { get; set; }
     }

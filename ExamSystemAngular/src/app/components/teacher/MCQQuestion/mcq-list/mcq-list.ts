@@ -7,10 +7,9 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-mcq-list',
   templateUrl: './mcq-list.html',
-  styleUrl: './mcq-list.css',
-    standalone: true,
-    imports: [RouterModule]
-
+  styleUrls: ['./mcq-list.css'],
+  standalone: true,
+  imports: [RouterModule, CommonModule]
 })
 export class McqList implements OnInit {
   questions: MCQQuestion[] = [];

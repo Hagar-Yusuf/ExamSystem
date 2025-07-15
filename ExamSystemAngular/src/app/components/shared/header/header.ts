@@ -8,7 +8,7 @@ import { AuthService } from '../../../services/auth-service';
   standalone: true,
   imports: [RouterModule, RouterLink, CommonModule],
   templateUrl: './header.html',
-  styleUrl: './header.css'
+  styleUrls: ['./header.css']
 })
 export class Header implements OnInit {
   navItems: any[] = [];
@@ -32,7 +32,7 @@ export class Header implements OnInit {
     } else if (this.role === 'Admin') {
       this.navItems = [
         { label: 'Exams', route: '/admin/exam' },
-        { label: 'Questions', route: '/admin/mcq' },
+        { label: 'Add Question', route: '/admin/addquestion' },
         { label: 'Students', route: '/admin/students' },
         { label: 'Results', route: '/admin/results' }
       ];

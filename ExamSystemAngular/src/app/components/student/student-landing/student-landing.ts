@@ -22,23 +22,28 @@ export class StudentLanding implements OnInit {
     this.loadExams();
   }
 
-  loadExams() {
-    this.studentService.GetAllExams().subscribe({
-      next: exams => {
-        this.exams = exams;
-        this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to load exams';
-        this.loading = false;
-      }
-    });
-  }
-
-startExam(examId: number) {
-  this.router.navigate(['/student/exams/start', examId]);
+loadExams() {
+  this.studentService.GetAllExams().subscribe({
+    next: exams => {
+      this.exams = exams
+        .filter((exam: any) => exam.isSubmitted !== true && exam.isSubmitted !== 'True')
+        .map((exam: any) => ({
+          ...exam,
+          isSubmitted: exam.isSubmitted === true || exam.isSubmitted === 'True'
+        }));
+      this.loading = false;
+    },
+    error: () => {
+      this.error = 'Failed to load exams';
+      this.loading = false;
+    }
+  });
 }
 
+
+  startExam(examId: number) {
+    this.router.navigate(['/student/exams/start', examId]);
+  }
 
   goToResults() {
     this.router.navigate(['/student/results']);

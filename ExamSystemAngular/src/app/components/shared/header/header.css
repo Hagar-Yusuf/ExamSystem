@@ -1,4 +1,11 @@
-/* Optional minimal tweaks (totally optional) */
-.navbar-nav .nav-link.active {
+.navbar {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.navbar-brand {
   font-weight: bold;
+}
+
+.nav-link {
+  font-weight: 500;
 }

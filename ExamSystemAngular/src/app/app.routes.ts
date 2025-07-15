@@ -13,7 +13,7 @@ import { McqList } from './components/teacher/MCQQuestion/mcq-list/mcq-list';
 import { McqDetails } from './components/teacher/MCQQuestion/mcq-details/mcq-details';
 import { McqAdd } from './components/teacher/MCQQuestion/mcq-add/mcq-add';
 import { McqEdit } from './components/teacher/MCQQuestion/mcq-edit/mcq-edit';
-
+import { AddQuestionComponent } from './components/admin/add-question/add-question';
 // Auth Guard
 import { authGuard } from './shared/auth-guard';
 
@@ -32,6 +32,12 @@ export const routes: Routes = [
   { path: 'admin/mcq/view/:id', component: McqDetails, canActivate: [authGuard], data: { role: 'Admin' } },
   { path: 'admin/mcq/add', component: McqAdd, canActivate: [authGuard], data: { role: 'Admin' } },
   { path: 'admin/mcq/edit/:id', component: McqEdit, canActivate: [authGuard], data: { role: 'Admin' } },
+    {
+    path: 'admin/addquestion',
+    component: AddQuestionComponent,
+    canActivate: [authGuard],
+    data: { role: 'Admin' }
+  },
 
   // ✅ New Admin Lazy Routes
   {
@@ -50,12 +56,6 @@ export const routes: Routes = [
   // Student Routes
   {
     path: 'student/exams',
-    loadComponent: () => import('./components/student/student-landing/student-landing').then(m => m.StudentLanding),
-    canActivate: [authGuard],
-    data: { role: 'Student' }
-  },
-  {
-    path: 'student/exams/start/:id',
     loadComponent: () => import('./components/student/start-exam/start-exam').then(m => m.StartExamComponent),
     canActivate: [authGuard],
     data: { role: 'Student' }

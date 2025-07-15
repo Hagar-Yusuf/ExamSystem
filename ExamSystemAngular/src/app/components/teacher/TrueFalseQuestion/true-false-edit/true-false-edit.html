@@ -1,0 +1,30 @@
+<div class="container mt-4" *ngIf="tf">
+  <h4>Edit True/False Question</h4>
+  <form (ngSubmit)="update()">
+    <div class="mb-2">
+      <label>Question Body</label>
+      <input [(ngModel)]="tf.body" name="body" class="form-control" required>
+    </div>
+
+    <div class="mb-2">
+      <label>Correct Answer</label>
+      <select [(ngModel)]="tf.correctAnswer" name="correctAnswer" class="form-control" required>
+        <option [ngValue]="true">True</option>
+        <option [ngValue]="false">False</option>
+      </select>
+    </div>
+
+    <div class="mb-2">
+      <label>Mark</label>
+      <input [(ngModel)]="tf.mark" name="mark" type="number" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label>Exam ID</label>
+      <input [(ngModel)]="tf.exam_ID" name="exam_ID" type="number" class="form-control" required>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Update</button>
+    <a class="btn btn-secondary ms-2" routerLink="/tf">Cancel</a>
+  </form>
+</div>

@@ -7,7 +7,14 @@
   <ul *ngIf="exams.length > 0; else noExams">
     <li *ngFor="let exam of exams">
       {{ exam.title }} (Duration: {{ exam.duration }} min)
-      <button (click)="startExam(exam.exam_ID)">Start Exam</button>
+
+      <ng-container *ngIf="!exam.isSubmitted; else showResults">
+        <button (click)="startExam(exam.exam_ID)">Start Exam</button>
+      </ng-container>
+
+      <ng-template #showResults>
+        <button (click)="goToResults()">View Results</button>
+      </ng-template>
     </li>
   </ul>
 

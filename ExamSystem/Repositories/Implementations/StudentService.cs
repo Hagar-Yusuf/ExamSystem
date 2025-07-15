@@ -178,11 +178,13 @@ namespace ExamSystem.Repositories.Implementations
                 .Select(r => new StudentResultDto
                 {
                     Result_ID = r.Result_ID,
-                    Exam_ID = (int)r.Exam_ID,
-                    User_ID = (int)r.User_ID,
-                    Score = (double)r.Score
+                    Exam_ID = r.Exam_ID ?? 0,
+                    ExamTitle = r.Exam.Title,
+                    User_ID = r.User_ID ?? 0,
+                    Score = r.Score ?? 0
                 })
                 .ToList();
         }
+
     }
 }

@@ -1,13 +1,13 @@
+// src/app/components/teacher/exam-details/exam-details.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ExamService } from '../../../services/exam-service';
-import { Exam } from '../../../services/exam-service';
+import { ExamService, Exam } from '../../../services/exam-service';
 
 @Component({
   selector: 'app-exam-details',
   templateUrl: './exam-details.html',
   styleUrls: ['./exam-details.css'],
-  standalone:true
+  standalone: true
 })
 export class ExamDetails implements OnInit {
   exam: Exam | null = null;
