@@ -11,4 +11,3 @@ bootstrapApplication(App, {
     provideRouter(routes)
   ]
 });
-
