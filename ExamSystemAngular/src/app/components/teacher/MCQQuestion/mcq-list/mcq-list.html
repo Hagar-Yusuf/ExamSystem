@@ -1,0 +1,24 @@
+<div class="container mt-4">
+  <h3>MCQ Questions</h3>
+  <a routerLink="/mcq/add" class="btn btn-success mb-2">Add Question</a>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th><th>Body</th><th>Correct</th><th>Exam</th><th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let q of questions">
+        <td>{{ q.question_ID }}</td>
+        <td>{{ q.body }}</td>
+        <td>{{ q.correctAnswer }}</td>
+        <td>{{ q.exam_ID }}</td>
+        <td>
+          <a [routerLink]="['/mcq/view', q.question_ID]" class="btn btn-info btn-sm">View</a>
+          <a [routerLink]="['/mcq/edit', q.question_ID]" class="btn btn-primary btn-sm">Edit</a>
+          <button class="btn btn-danger btn-sm" (click)="delete(q.question_ID)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
