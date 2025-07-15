@@ -1,11 +1,13 @@
 ﻿using ExamSystem.DTOs;
 using ExamSystem.Models;
 using ExamSystem.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class McqQuestionsController : ControllerBase
@@ -21,7 +23,7 @@ namespace ExamSystem.Controllers
 
 
         ///////////////////GetByID//////////////////////
-        [HttpGet("/api/View-Mcq-Question/{id}")]
+        [HttpGet("View-Mcq-Question/{id}")]
         public IActionResult GetByID(int id)
         {
             var Mcq = McqRepository.GetByID(id);

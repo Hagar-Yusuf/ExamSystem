@@ -22,8 +22,8 @@ public partial class User
     [StringLength(50)]
     public string Email { get; set; }
 
-    [StringLength(30)]
-    public string Password { get; set; }
+    [StringLength(255)]
+    public string PasswordHash { get; set; }
 
     [StringLength(30)]
     public string Role { get; set; }

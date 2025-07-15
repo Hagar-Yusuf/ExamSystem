@@ -1,11 +1,13 @@
 ﻿using ExamSystem.DTOs;
 using ExamSystem.Models;
 using ExamSystem.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExamSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class TrueFalseQuestionsController : ControllerBase
@@ -21,7 +23,7 @@ namespace ExamSystem.Controllers
 
 
         ///////////////////GetByID//////////////////////
-        [HttpGet("api/View-TrueFalse-Questions/{id}")]
+        [HttpGet("View-TrueFalse-Questions/{id}")]
         public IActionResult GetByID(int id)
         {
             var TrueFalseQ = TrueFalseRepository.GetByID(id);
@@ -132,7 +134,7 @@ namespace ExamSystem.Controllers
         }
 
         ///////////////////Delete TFQuestion//////////////////////
-        [HttpDelete("api/Delete-TrueFalse-Question/{id}")]
+        [HttpDelete("Delete-TrueFalse-Question/{id}")]
         public IActionResult DeleteTFQuestion(int id)
         {
             var TrueFalseQ = TrueFalseRepository.GetByID(id);

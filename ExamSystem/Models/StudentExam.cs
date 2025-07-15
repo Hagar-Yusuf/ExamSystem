@@ -18,8 +18,7 @@ public partial class StudentExam
 
     public int? Exam_ID { get; set; }
 
-    [StringLength(30)]
-    public string isSubmitted { get; set; }
+    public bool isSubmitted { get; set; }
 
     [InverseProperty("StudentExam")]
     public virtual ICollection<Answer> Answers { get; set; } = new List<Answer>();
