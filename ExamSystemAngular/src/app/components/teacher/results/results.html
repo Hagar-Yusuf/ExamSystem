@@ -1,0 +1,21 @@
+<div class="container mt-4">
+  <h3>Student Exam Results</h3>
+  <div *ngIf="error" class="text-danger">{{ error }}</div>
+  <table class="table table-striped mt-3" *ngIf="results.length > 0">
+    <thead>
+      <tr>
+        <th>Student</th>
+        <th>Exam</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of results">
+        <td>{{ r.studentName }}</td>
+        <td>{{ r.examTitle }}</td>
+        <td>{{ r.score }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="!error && results.length === 0">No results found.</p>
+</div>

@@ -38,6 +38,7 @@ namespace ExamSystem
             builder.Services.AddScoped<ITrueFalseRepository, TrueFalseRepository>();
             builder.Services.AddScoped<IMcqRepository, McqRepository>();
             builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+            builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
             // JWT Authentication
             var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Key"]);

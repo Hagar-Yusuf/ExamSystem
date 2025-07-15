@@ -20,4 +20,11 @@
     <button class="btn btn-success">Register</button>
     <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
   </form>
+  <div class="mt-3">
+  <span>Already have an account?</span>
+  <button type="button" class="btn btn-link p-0 align-baseline" (click)="goToLogin()">
+    Go to Login
+  </button>
+</div>
+
 </div>

@@ -16,7 +16,9 @@ export class Login {
   email = '';
   password = '';
   error = '';
-
+goToRegister() {
+  this.router.navigate(['/register']);
+}
   login() {
 this.auth.login(this.email, this.password).subscribe({
   next: (res) => {

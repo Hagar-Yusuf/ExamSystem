@@ -1,5 +1,11 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-3">
-  <a class="navbar-brand" routerLink="/">Exam System</a>
+  <a
+  class="navbar-brand"
+  [routerLink]="role === 'Admin' ? '/admin/exam' : role === 'Student' ? '/student/exams' : '/login'"
+>
+  Exam System
+</a>
+
   <div *ngIf="isLoggedIn" class="collapse navbar-collapse">
     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
       <li class="nav-item" *ngFor="let item of navItems">
